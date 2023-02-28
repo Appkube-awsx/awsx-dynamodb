@@ -64,6 +64,7 @@ func Execute() {
 
 func init() {
 	AwsxDynamoDbCmd.AddCommand(dynamodbcmd.GetConfigDataCmd)
+	AwsxDynamoDbCmd.AddCommand(dynamodbcmd.GetCostDataCmd)
 	AwsxDynamoDbCmd.PersistentFlags().String("vaultUrl", "", "vault end point")
 	AwsxDynamoDbCmd.PersistentFlags().String("accountId", "", "aws account number")
 	AwsxDynamoDbCmd.PersistentFlags().String("zone", "", "aws region")
