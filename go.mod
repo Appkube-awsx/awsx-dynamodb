@@ -1,4 +1,4 @@
-module github.com/Appkube-awsx/awsx-getDynamodb
+module github.com/Appkube-awsx/awsx-dynamodb
 
 go 1.19
 

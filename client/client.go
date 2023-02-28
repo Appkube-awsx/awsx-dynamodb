@@ -2,7 +2,7 @@ package client
 
 import (
 	"fmt"
-	"github.com/Appkube-awsx/awsx-getDynamodb/awssession"
+	"github.com/Appkube-awsx/awsx-dynamodb/awssession"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 
 	"github.com/aws/aws-sdk-go/aws"

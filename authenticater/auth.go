@@ -1,7 +1,7 @@
 package authenticater
 
 import (
-	"github.com/Appkube-awsx/awsx-getDynamodb/vault"
+	"github.com/Appkube-awsx/awsx-dynamodb/vault"
 	"log"
 )
 
@@ -27,7 +27,7 @@ func AuthenticateData(vaultUrl string, accountNo string, region string, acKey st
 	} else if region != "" && acKey != "" && secKey != "" && crossAccountRoleArn != "" && externalId != "" {
 		return true
 	} else {
-		log.Fatal("AWS credentials like accesskey/secretkey/region/crossAccountRoleArn not provided. Program exit")
+		log.Fatal("AWS credentials like accesskey/secretkey/region/crossAccountRoleArn/externalId not provided. Program exit")
 		return false
 	}
 }

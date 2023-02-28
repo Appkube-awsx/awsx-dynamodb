@@ -4,9 +4,9 @@ Copyright © 2023 Manoj Sharma manoj.sharma@synectiks.com
 package commands
 
 import (
-	"github.com/Appkube-awsx/awsx-getDynamodb/authenticater"
-	"github.com/Appkube-awsx/awsx-getDynamodb/client"
-	"github.com/Appkube-awsx/awsx-getDynamodb/commands/dynamodbcmd"
+	"github.com/Appkube-awsx/awsx-dynamodb/authenticater"
+	"github.com/Appkube-awsx/awsx-dynamodb/client"
+	"github.com/Appkube-awsx/awsx-dynamodb/commands/dynamodbcmd"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/spf13/cobra"
 	"log"

@@ -5,8 +5,8 @@ package dynamodbcmd
 
 import (
 	"fmt"
-	"github.com/Appkube-awsx/awsx-getDynamodb/authenticater"
-	"github.com/Appkube-awsx/awsx-getDynamodb/client"
+	"github.com/Appkube-awsx/awsx-dynamodb/authenticater"
+	"github.com/Appkube-awsx/awsx-dynamodb/client"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/spf13/cobra"
