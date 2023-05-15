@@ -5,12 +5,13 @@ package dynamodbcmd
 
 import (
 	"fmt"
+	"log"
+
 	"github.com/Appkube-awsx/awsx-dynamodb/authenticater"
 	"github.com/Appkube-awsx/awsx-dynamodb/client"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/spf13/cobra"
-	"log"
 )
 
 // getConfigDataCmd represents the getConfigData command

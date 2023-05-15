@@ -4,12 +4,13 @@ Copyright © 2023 Manoj Sharma manoj.sharma@synectiks.com
 package commands
 
 import (
+	"log"
+
 	"github.com/Appkube-awsx/awsx-dynamodb/authenticater"
 	"github.com/Appkube-awsx/awsx-dynamodb/client"
 	"github.com/Appkube-awsx/awsx-dynamodb/commands/dynamodbcmd"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/spf13/cobra"
-	"log"
 )
 
 // AwsxCloudElementsCmd represents the base command when called without any subcommands
@@ -48,9 +49,6 @@ func getDynamoDbList(region string, crossAccountRoleArn string, accessKey string
 	return tableList, err
 }
 
-//func GetConfig(region string, crossAccountRoleArn string, accessKey string, secretKey string) *configservice.GetDiscoveredResourceCountsOutput {
-//	return getLambdaList(region, crossAccountRoleArn, accessKey, secretKey)
-//}
 
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
@@ -64,7 +62,7 @@ func Execute() {
 
 func init() {
 	AwsxDynamoDbCmd.AddCommand(dynamodbcmd.GetConfigDataCmd)
-	AwsxDynamoDbCmd.AddCommand(dynamodbcmd.GetCostDataCmd)
+	
 	AwsxDynamoDbCmd.PersistentFlags().String("vaultUrl", "", "vault end point")
 	AwsxDynamoDbCmd.PersistentFlags().String("accountId", "", "aws account number")
 	AwsxDynamoDbCmd.PersistentFlags().String("zone", "", "aws region")
