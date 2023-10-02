@@ -44,38 +44,38 @@ func GetDynamodbTableNames(clientAuth *client.Auth) (*dynamodb.ListTablesOutput,
 	return response, nil
 }
 
-func GetDynamodbDetailsByAccountNo(vaultUrl string, vaultToken string, accountNo string, region string) ([]*dynamodb.DescribeTableOutput, error) {
+func GetDynamodbDetailsByAccountNo(vaultUrl string, vaultToken string, accountNo string, region string) (string, error) {
 	authFlag, clientAuth, err := authenticate.AuthenticateData(vaultUrl, vaultToken, accountNo, region, "", "", "", "")
 	return GetDynamodbDetailsByFlagAndClientAuth(authFlag, clientAuth, err)
 }
 
-func GetDynamodbDetailssByUserCreds(region string, accessKey string, secretKey string, crossAccountRoleArn string, externalId string) ([]*dynamodb.DescribeTableOutput, error) {
+func GetDynamodbDetailssByUserCreds(region string, accessKey string, secretKey string, crossAccountRoleArn string, externalId string) (string, error) {
 	authFlag, clientAuth, err := authenticate.AuthenticateData("", "", "", region, accessKey, secretKey, crossAccountRoleArn, externalId)
 	return GetDynamodbDetailsByFlagAndClientAuth(authFlag, clientAuth, err)
 }
 
-func GetDynamodbDetailsByFlagAndClientAuth(authFlag bool, clientAuth *client.Auth, err error) ([]*dynamodb.DescribeTableOutput, error) {
+func GetDynamodbDetailsByFlagAndClientAuth(authFlag bool, clientAuth *client.Auth, err error) (string, error) {
 	if err != nil {
 		log.Println(err.Error())
-		return nil, err
+		return "", err
 	}
 	if !authFlag {
 		log.Println(err.Error())
-		return nil, err
+		return "", err
 	}
-	response, err := command.GetDynamoDbTableDetails(*clientAuth)
+	response, err := GetDynamodbDetails(clientAuth)
 	if err != nil {
 		log.Println(err.Error())
-		return nil, err
+		return "", err
 	}
 	return response, nil
 }
 
-func GetDynamodbDetails(clientAuth *client.Auth) ([]*dynamodb.DescribeTableOutput, error) {
+func GetDynamodbDetails(clientAuth *client.Auth) (string, error) {
 	response, err := command.GetDynamoDbTableDetails(*clientAuth)
 	if err != nil {
 		log.Println(err.Error())
-		return nil, err
+		return "", err
 	}
 	return response, nil
 }

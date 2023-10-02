@@ -4,6 +4,7 @@ Copyright © 2023 Manoj Sharma manoj.sharma@synectiks.com
 package command
 
 import (
+	"encoding/json"
 	"log"
 
 	"github.com/Appkube-awsx/awsx-common/authenticate"
@@ -12,6 +13,11 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/spf13/cobra"
 )
+
+type DynamodbObj struct {
+	Table interface{} `json:"table"`
+	Tags  interface{} `json:"tags"`
+}
 
 // AwsxDynamoDbCmd represents the base command when called without any subcommands
 var AwsxDynamoDbCmd = &cobra.Command{
@@ -50,24 +56,37 @@ func GetDynamoDbTableList(auth client.Auth) (*dynamodb.ListTablesOutput, error) 
 	return tableList, err
 }
 
-func GetDynamoDbTableDetails(auth client.Auth) ([]*dynamodb.DescribeTableOutput, error) {
+func GetDynamoDbTableDetails(auth client.Auth) (string, error) {
 	log.Println("Getting detail of each dynamodb table")
 	tableNamesOutput, err := GetDynamoDbTableList(auth)
 	if err != nil {
 		log.Fatalln("Error: in getting dynamodb table list", err)
-		return nil, err
+		return "Error: in getting dynamodb table list", err
 	}
-	allTableDetais := []*dynamodb.DescribeTableOutput{}
+	//allTableDetais := []*dynamodb.DescribeTableOutput{}
+	allTableDetais := []DynamodbObj{}
+	dynamodbClient := client.GetClient(auth, client.DYNAMODB_CLIENT).(*dynamodb.DynamoDB)
 	for _, table := range tableNamesOutput.TableNames {
 		tableDetail, err := dynamodbcmd.GetDynamoDbTableDetail(*table, auth)
+		tagInput := &dynamodb.ListTagsOfResourceInput{
+			ResourceArn: tableDetail.Table.TableArn,
+		}
+		tagOutput, err := dynamodbClient.ListTagsOfResource(tagInput)
+		dynamodbObj := DynamodbObj{
+			Table: tableDetail,
+			Tags:  tagOutput,
+		}
 		if err != nil {
 			log.Println("Error: in getting dynamodb table detail", err)
+			continue
 		} else {
-			allTableDetais = append(allTableDetais, tableDetail)
+			allTableDetais = append(allTableDetais, dynamodbObj)
 		}
+
 	}
-	log.Println(allTableDetais)
-	return allTableDetais, nil
+	jsonData, err := json.Marshal(allTableDetais)
+	log.Println(string(jsonData))
+	return string(jsonData), err
 }
 
 // Execute adds all child command to the root command and sets flags appropriately.
